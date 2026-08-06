@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://125w4th2y8o4"]
+
+[ext_resource type="PackedScene" uid="uid://b16q1k7seebrj" path="res://Swords/BaseSword/BaseSword.tscn" id="1_10hg1"]
+[ext_resource type="Script" uid="uid://j8po4cjg0757" path="res://Swords/DefaultSword/DefaultSword.gd" id="2_wl4wu"]
+
+[node name="BaseSword" unique_id=1540070817 instance=ExtResource("1_10hg1")]
+script = ExtResource("2_wl4wu")
+
+[node name="Area2D" parent="." index="0" unique_id=1965116643]
+monitorable = false

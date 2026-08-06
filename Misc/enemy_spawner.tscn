@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bh4hakq7d0ly7"]
+
+[ext_resource type="Script" uid="uid://blhag7uu6ptq7" path="res://GeneralScript/EnemySpawner.gd" id="1_rnysl"]
+
+[node name="EnemySpawner" type="Timer" unique_id=544943082 node_paths=PackedStringArray("timer")]
+script = ExtResource("1_rnysl")
+timer = NodePath(".")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

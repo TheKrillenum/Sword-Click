@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b16q1k7seebrj"]
+
+[ext_resource type="Script" uid="uid://d3x5hkkkqfmrv" path="res://Swords/BaseSword/BaseSword.gd" id="1_kb68g"]
+[ext_resource type="Texture2D" uid="uid://crgurvjtev6ba" path="res://Swords/Placeholder_swords/Sword 1.png" id="1_yfl5k"]
+
+[node name="BaseSword" type="Sprite2D" unique_id=1540070817 node_paths=PackedStringArray("cooldown_timer")]
+texture = ExtResource("1_yfl5k")
+script = ExtResource("1_kb68g")
+cooldown_timer = NodePath("Cooldown")
+
+[node name="Cooldown" type="Timer" parent="." unique_id=243321648]
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
