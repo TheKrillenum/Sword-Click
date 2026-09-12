@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://2c78omsjmcdb"]
+
+[ext_resource type="PackedScene" uid="uid://bm3ffagf8gyo5" path="res://Entities/Interactibles/BaseInteractible/BaseInteractible.tscn" id="1_dta76"]
+[ext_resource type="Script" uid="uid://cddw1gl6j8wlk" path="res://Entities/Interactibles/ShooterEnemy/ShooterEnemy_ai.gd" id="2_k2un2"]
+
+[node name="CharacterBody2D" unique_id=1102968816 node_paths=PackedStringArray("cooldown_timer") instance=ExtResource("1_dta76")]
+script = ExtResource("2_k2un2")
+cooldown_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." index="3" unique_id=576246932]
+wait_time = 2.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

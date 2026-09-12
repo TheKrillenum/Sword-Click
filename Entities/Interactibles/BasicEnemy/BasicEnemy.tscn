@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://csiwfjgb5givc"]
+
+[ext_resource type="PackedScene" uid="uid://bm3ffagf8gyo5" path="res://Entities/Interactibles/BaseInteractible/BaseInteractible.tscn" id="1_dowd8"]
+[ext_resource type="Script" uid="uid://xkbfxlcojwd6" path="res://Entities/Interactibles/BasicEnemy/BasicEnemy_ai.gd" id="2_wsisb"]
+
+[node name="CharacterBody2D" unique_id=1102968816 instance=ExtResource("1_dowd8")]
+collision_mask = 0
+script = ExtResource("2_wsisb")

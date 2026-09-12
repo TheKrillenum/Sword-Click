@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://b16q1k7seebrj"]
+
+[ext_resource type="Script" uid="uid://d3x5hkkkqfmrv" path="res://Entities/Swords/BaseSword/BaseSword.gd" id="1_kb68g"]
+[ext_resource type="Texture2D" uid="uid://crgurvjtev6ba" path="res://Entities/Swords/Placeholder_swords/Sword 1.png" id="1_yfl5k"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ur33"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ur33"]
+size = Vector2(54, 8)
+
+[node name="BaseSword" type="Sprite2D" unique_id=1540070817 node_paths=PackedStringArray("attack_animation", "throw_collision", "cooldown_timer", "windup_timer")]
+texture = ExtResource("1_yfl5k")
+script = ExtResource("1_kb68g")
+attack_animation = NodePath("AnimatedSprite2D")
+throw_collision = NodePath("Area2D")
+cooldown_timer = NodePath("Cooldown_Timer")
+windup_timer = NodePath("Windup_Timer")
+
+[node name="Cooldown_Timer" type="Timer" parent="." unique_id=243321648]
+one_shot = true
+
+[node name="Windup_Timer" type="Timer" parent="." unique_id=643509996]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1904424445]
+sprite_frames = SubResource("SpriteFrames_2ur33")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1506067023]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=738677733]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_2ur33")
+
+[connection signal="timeout" from="Cooldown_Timer" to="." method="_on_cooldown_timeout"]
+[connection signal="timeout" from="Windup_Timer" to="." method="_on_windup_timer_timeout"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

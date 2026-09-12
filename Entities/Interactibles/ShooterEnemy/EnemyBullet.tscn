@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bhkql0u1yyvt5"]
+
+[ext_resource type="Script" uid="uid://bo4570x5kjh2e" path="res://Entities/Interactibles/ShooterEnemy/Enemy_bullet_ai.gd" id="1_hpqsj"]
+[ext_resource type="Texture2D" uid="uid://h34toeytg2p0" path="res://Misc/Aseprite_sprite/Enemy_bullet.png" id="1_urpto"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpqsj"]
+atlas = ExtResource("1_urpto")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwp22"]
+atlas = ExtResource("1_urpto")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nvbj"]
+atlas = ExtResource("1_urpto")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0i3t"]
+atlas = ExtResource("1_urpto")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uesv"]
+atlas = ExtResource("1_urpto")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xjfu"]
+atlas = ExtResource("1_urpto")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqu83"]
+atlas = ExtResource("1_urpto")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k8c7"]
+atlas = ExtResource("1_urpto")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0q5ud"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpqsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwp22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nvbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0i3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uesv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xjfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqu83")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k8c7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 32.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_urpto"]
+radius = 7.0
+
+[node name="EnemyBullet" type="Node2D" unique_id=688836706]
+script = ExtResource("1_hpqsj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1817875648]
+sprite_frames = SubResource("SpriteFrames_0q5ud")
+autoplay = "default"
+frame = 3
+frame_progress = 0.95415884
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1801353633]
+visible = false
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=342109158]
+shape = SubResource("CircleShape2D_urpto")
+
+[node name="Timer" type="Timer" parent="." unique_id=484077121]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
