@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bb6kat4hba0wy" path="res://Levels/Containers/misc.tscn" id="4_4t6x8"]
 [ext_resource type="PackedScene" uid="uid://bi2a3ia6mafqn" path="res://Entities/PlayerCharacter/player_spawn_location.tscn" id="5_tc6tp"]
 [ext_resource type="PackedScene" uid="uid://bh4hakq7d0ly7" path="res://Misc/enemy_spawner.tscn" id="6_k8b6b"]
+[ext_resource type="PackedScene" uid="uid://b0q8jpnlkffea" path="res://Levels/Containers/sword_container.tscn" id="7_pvdih"]
+[ext_resource type="Texture2D" uid="uid://06i33edqrm7h" path="res://Misc/Aseprite_sprite/BasicSlash.png" id="8_7e6fp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6koui"]
 texture = ExtResource("1_ub4j8")
@@ -149,14 +151,12 @@ sources/1 = SubResource("TileSetAtlasSource_6koui")
 [node name="Misc" parent="." unique_id=367740082 instance=ExtResource("4_4t6x8")]
 
 [node name="PlayerSpawnLocation" parent="Misc" unique_id=1195587827 instance=ExtResource("5_tc6tp")]
-position = Vector2(296, 212)
+position = Vector2(320, 180)
 
 [node name="Camera2D" type="Camera2D" parent="Misc/PlayerSpawnLocation" unique_id=1887571335]
-zoom = Vector2(1.75, 1.75)
 
-[node name="EnemySpawner" parent="Misc" unique_id=544943082 node_paths=PackedStringArray("timer") instance=ExtResource("6_k8b6b")]
+[node name="EnemySpawner" parent="Misc" unique_id=544943082 instance=ExtResource("6_k8b6b")]
 autostart = true
-timer = NodePath(".")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Misc" unique_id=1634271425]
 visible = false
@@ -165,4 +165,8 @@ tile_set = SubResource("TileSet_3mrnv")
 
 [node name="Bullet_container" type="Node" parent="Misc" unique_id=1405727489 groups=["Bullet_container"]]
 
-[node name="Sword_container" type="Node" parent="." unique_id=1857120677]
+[node name="Sword_container" parent="." unique_id=1142150725 instance=ExtResource("7_pvdih")]
+
+[node name="BasicSlash" type="Sprite2D" parent="." unique_id=81623087]
+position = Vector2(642, 361)
+texture = ExtResource("8_7e6fp")

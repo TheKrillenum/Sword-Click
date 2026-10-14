@@ -1,37 +1,43 @@
 class_name idleState extends State
 
 @export var dash: State
+@export var dodge: State
 
 func enter_state()-> void:
-	pass
+	if(player.sprite):
+		player.sprite.play("Idle")
 
 
 func exit_state()-> void:
 	pass
 
 
-func update_physics(_delta: float)-> void:
-	pass
-
-
-func update(_delta: float)-> void:
-	if(player.sprite):
-		player.sprite.play("Idle")
-		
-	if(Input.is_action_just_pressed("LeftClick")):
+func custom_state_input(event: InputEvent) -> void:
+	if event.is_action_pressed("LeftClick"):
 		
 		if(GlobalDataCollection.debug_mode):
-			player.debug_mode_target = PointAndClick.current_mouse_pos
-			switch_state.emit(dash)
+			debug_mode_idle()
 			return
 		
 		if(PointAndClick.last_highlighted_enemy == null):
 			return
+		
+		enemy_selection()
 	
-		var selected_enemy: Interactible = PointAndClick.last_highlighted_enemy
+	if(event.is_action_pressed("Dodge")):
+		switch_state.emit(dodge)
+
+
+func debug_mode_idle() -> void:
+	player.debug_mode_target = PointAndClick.current_mouse_pos
+	switch_state.emit(dash)
+
+
+func enemy_selection() -> void:
+	var selected_enemy: Interactible = PointAndClick.last_highlighted_enemy
 	
-		if(player.position.distance_to(selected_enemy.position) <= player.TEMP_SWORD.sword_range):
-			player.TEMP_SWORD.perform_combo_attack(selected_enemy.position)
-		else:
-			player.current_target = selected_enemy
-			switch_state.emit(dash)
+	if(player.position.distance_to(selected_enemy.position) <= player.TEMP_SWORD.stats.sword_range):
+		player.TEMP_SWORD.perform_combo_attack(selected_enemy.position)
+	else:
+		player.current_target = selected_enemy
+		switch_state.emit(dash)

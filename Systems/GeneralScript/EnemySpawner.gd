@@ -1,6 +1,5 @@
-extends Node
+extends Timer
 
-@export var timer: Timer
 var basic_enemy: Resource = preload("uid://csiwfjgb5givc")
 var shooting_enemy: Resource = preload("uid://2c78omsjmcdb")
 var xd: bool = false
@@ -52,13 +51,12 @@ func create_shooter_enemy() -> Interactible:
 		return null
 
 
-
 func get_spawn_position() -> Vector2:
 	var output_position: Vector2
 	var invalid_spawn_position: bool = true
 	while(invalid_spawn_position):
-		output_position.x = randf_range(-900.0, 900.0)
-		output_position.y = randf_range(-500.0, 500.0)
+		output_position.x = randf_range(0.0, GlobalDataCollection.screen_size.x)
+		output_position.y = randf_range(0.0, GlobalDataCollection.screen_size.y)
 		query.transform = Transform2D(Vector2.RIGHT, Vector2.DOWN, Vector2(output_position.x, output_position.y))
 		invalid_spawn_position = !space_state.intersect_shape(query).is_empty()
 	return output_position
@@ -76,13 +74,12 @@ func set_spawn_properties() -> void:
 
 func _on_timeout() -> void:
 	set_spawn_properties()
-	#spawn_enemies()
+	spawn_enemies()
 	if(xd):
 		safsgdgn()
 		xd = false
 	else:
 		xd = true
-	pass
 
 
 func safsgdgn() -> void:

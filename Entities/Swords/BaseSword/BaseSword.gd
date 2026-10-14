@@ -6,19 +6,10 @@ class_name Sword extends Node2D
 @export var attack_animation: AnimatedSprite2D
 
 # Sword Data
-var sword_range: int = 0
-var combo_damage: Array[float] = [10.0]
-var dash_damage: float = 5.0
-var dash_cooldown: float = 0.1
-var cooldown_time: Array[float] = [0.1]
+@export var stats: Sword_stats
 var combo_attack_counter: int = 0
-var max_attack_combo:int = 0
-var combo_attack_call: Array[String]
-var durability: float = 100.0
 
 # Throw data
-var throw_damage: float = 10.0
-var throw_speed: float = 3.0
 var throw_target_location: Vector2
 var attached_to_player: bool = true
 var on_the_ground: bool = false
@@ -39,14 +30,24 @@ var attack_scale: Vector2 = Vector2.ONE
 var attack_origin: Vector2 = Vector2.ZERO
 
 # Slash shape
-var slash_shape_properties: PackedVector2Array = PackedVector2Array([Vector2(0.0, -45.0), Vector2(20.0, -35.0), Vector2(35.0, -25.0), Vector2(45.0, 0.0), Vector2(35.0, 25.0), Vector2(20.0, 35.0), Vector2(0.0, 45.0)])
+var slash_shape_properties: PackedVector2Array = PackedVector2Array([
+	Vector2(0.0, -47.0), 
+	Vector2(20.0, -47.0), 
+	Vector2(38.0, -41.0), 
+	Vector2(55.0, -23.0), 
+	Vector2(60.0, -9.0), 
+	Vector2(60.0, 9.0), 
+	Vector2(55.0, 23.0), 
+	Vector2(43.0, 38.0), 
+	Vector2(20.0, 47.0), 
+	Vector2(0.0, 47.0)])
 
 # Physics query & space_state
 var space_state: PhysicsDirectSpaceState2D
 var query = PhysicsShapeQueryParameters2D.new()
 
-
 # FUNCTIONS ----------------------------------------------------------------------
+
 func _init() -> void:
 	set_process(false)
 	set_physics_process(false)
@@ -61,28 +62,39 @@ func _ready() -> void:
 	attack_animation.visible = false
 
 
+func _physics_process(delta: float) -> void:
+	if(!attached_to_player):
+		position = position.move_toward(throw_target_location, stats.throw_speed)
+		if(position.is_equal_approx(throw_target_location)):
+			set_physics_process(false)
+			on_the_ground = true
+			throw_collision.monitoring = false
+			sword_power()
+
+
 func perform_combo_attack(targeted_location: Vector2)->void:
 	
 	if(is_on_cooldown):
 		print_debug("on cooldown !")
 		return
 	
-	if(combo_attack_call.get(combo_attack_counter) == null):
+	if(stats.combo_attack_call.get(combo_attack_counter) == null):
 		printerr("Combo counter out of range")
 		reset_combo()
 		return
 		
-	Callable(self, combo_attack_call.get(combo_attack_counter)).call(targeted_location)
+	Callable(self, stats.combo_attack_call.get(combo_attack_counter)).call(targeted_location)
 	
-	start_cooldown(cooldown_time[combo_attack_counter])
+	start_cooldown(stats.cooldown_time[combo_attack_counter])
 	
 	combo_attack_counter += 1
-	if (combo_attack_counter > (max_attack_combo - 1)):
+	if (combo_attack_counter > (stats.max_attack_combo - 1)):
 		reset_combo()
 
+# DASH --------------------------------------------------------------------------------------------
 
 func dash_attack_complete(_targeted_location: Vector2)->void:
-	start_cooldown(dash_cooldown)
+	start_cooldown(stats.dash_cooldown)
 
 
 func dash_attack_begin(_targeted_location: Vector2)->void:
@@ -92,27 +104,14 @@ func dash_attack_begin(_targeted_location: Vector2)->void:
 func dash_attack_interupted()->void:
 	pass
 
-
-func reset_combo()->void:
-	combo_attack_counter = 0
-
+# THROW WEAPON -------------------------------------------------------------------------------------
 
 func throw_weapon(target_location: Vector2)->void:
-	self.reparent(get_tree().get_first_node_in_group("Enemy_container"))
-	throw_target_location = target_location
+	self.reparent(get_tree().get_first_node_in_group("Sword_container"))
 	attached_to_player = false
+	throw_target_location = target_location
 	throw_collision.monitoring = true
 	set_physics_process(true)
-
-
-func _physics_process(delta: float) -> void:
-	if(!attached_to_player):
-		position = position.move_toward(throw_target_location, throw_speed)
-		if(position.is_equal_approx(throw_target_location)):
-			set_physics_process(false)
-			on_the_ground = true
-			throw_collision.monitoring = false
-			sword_power()
 
 
 func sword_power() -> void:
@@ -123,19 +122,14 @@ func pick_up_weapon()->void:
 	pass
 
 
-func deal_damage(target: Interactible, damage_amount: float)->void:
-	target.take_damage(damage_amount)
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if(body as Interactible):
+		deal_damage(body, stats.throw_damage)
 
+# COMBO DAMAGE AND AREAS----------------------------------------------------------------------------
 
-func start_cooldown(time: float):
-	cooldown_timer.start(time)
-	is_on_cooldown = true
-
-
-func reset_animation() -> void:
-	attack_animation.visible = false
-	attack_animation.rotation = 0.0
-	attack_animation.position = Vector2.ZERO
+func deal_damage(target: BaseEnemy, damage_amount: float)->void:
+	target.stats.take_damage(damage_amount)
 
 
 ## [enum Shape] represent the 4 possible shapes: SEGMENT, CIRCLE, RECTANGLE and SLASH.[br]
@@ -151,7 +145,6 @@ func check_for_area(area_rotation: float, area_scale: Vector2, area_origin: Vect
 	
 	match requested_shape:
 		0: #Segment
-			
 			if(_shape_properties is float):
 				collision_shape = PhysicsServer2D.segment_shape_create()
 				var correct_segment_properties = Rect2(Vector2(0,0), Vector2(_shape_properties, 0))
@@ -190,6 +183,12 @@ func check_for_area(area_rotation: float, area_scale: Vector2, area_origin: Vect
 	PhysicsServer2D.free_rid(collision_shape)
 	return output
 
+# TIMERS AND COOLDOWN ------------------------------------------------------------------------------
+
+func start_cooldown(time: float):
+	cooldown_timer.start(time)
+	is_on_cooldown = true
+
 
 func _on_windup_timer_timeout() -> void:
 	if(callable_damage_func != "null"):
@@ -203,11 +202,17 @@ func _on_cooldown_timeout() -> void:
 	attack_scale = Vector2.ONE
 	attack_origin = Vector2.ZERO
 
+# MISC ---------------------------------------------------------------------------------------------
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	reset_animation()
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if(body as Interactible):
-		deal_damage(body, throw_damage)
+func reset_combo()->void:
+	combo_attack_counter = 0
+
+
+func reset_animation() -> void:
+	attack_animation.visible = false
+	attack_animation.rotation = 0.0
+	attack_animation.position = Vector2.ZERO

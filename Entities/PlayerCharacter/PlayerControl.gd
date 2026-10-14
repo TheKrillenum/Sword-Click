@@ -10,10 +10,11 @@ var max_health: float = 10.0
 var health: float = max_health
 var armor: float = 0.0
 var dead: bool = false
+var invincible: bool = false
 
 # Movement variable
 var current_target: Interactible
-const SPEED: float = 300
+const SPEED: float = 400
 var debug_mode_target: Vector2
 
 # Sword variables
@@ -44,22 +45,31 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, TEMP_SWORD.sword_range, Color.BLACK, false, 2.0)
+	draw_circle(Vector2.ZERO, TEMP_SWORD.stats.sword_range, Color.BLACK, false, 2.0)
 
 
 func _physics_process(_delta: float) -> void:
-	move_and_slide()
-
-
-func _process(_delta: float) -> void:
-	if(dead):
-		return
-	
 	PointAndClick.current_mouse_pos = get_global_mouse_position()
+	move_and_slide()
+	if(!is_instance_valid(current_target)):
+		current_target = null
+
+
+func _unhandled_input(event: InputEvent) -> void:
 	
-	if(Input.is_action_just_pressed("RightClick")):
-		debug_test()
-		# Pure debugging over here guys
+	if(event.is_action_pressed("RightClick")):
+		debug_mode()
+		print_debug("Debug mode")
+	
+	if(event.is_action_pressed("ScrollUp")):
+		print_debug("Scroll up")
+	
+	if(event.is_action_pressed("ScrollDown")):
+		print_debug("scroll down")
+	
+	if(event.is_action_pressed("Throw")):
+		TEMP_SWORD.throw_weapon(get_global_mouse_position())
+		print_debug("Throw")
 
 
 func heal(heal_amount: float) -> void:
@@ -78,10 +88,6 @@ func take_damage(damage_amount: float) -> void:
 
 func player_death() -> void:
 	sprite.visible = false
-
-
-func debug_test() -> void:
-	TEMP_SWORD.throw_weapon(get_global_mouse_position())
 
 
 func debug_mode() -> void:

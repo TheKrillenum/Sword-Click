@@ -1,4 +1,4 @@
 [gd_scene format=3 uid="uid://baaudkqnp51ri"]
 
 [node name="CustomSwingCollisionShape" type="CollisionPolygon2D" unique_id=1902620468]
-polygon = PackedVector2Array(0, -45, 20, -35, 35, -25, 45, 0, 35, 25, 20, 35, 0, 45)
+polygon = PackedVector2Array(0, -47, 20, -47, 38, -41, 55, -23, 60, -9, 60, 9, 55, 23, 43, 38, 20, 47, 0, 47)

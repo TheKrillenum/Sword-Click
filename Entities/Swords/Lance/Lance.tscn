@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://ds2548qc1nt6q"]
+
+[ext_resource type="PackedScene" uid="uid://b16q1k7seebrj" path="res://Entities/Swords/BaseSword/BaseSword.tscn" id="1_6d8qg"]
+[ext_resource type="Script" uid="uid://cbmp671n4ejor" path="res://Entities/Swords/Lance/Lance.gd" id="2_2wphd"]
+[ext_resource type="Script" uid="uid://b16rqboonw4jx" path="res://Misc/Ressource/SwordStats.gd" id="3_1hs26"]
+
+[sub_resource type="Curve" id="Curve_1hs26"]
+_limits = [1.0, 50.0, 0.0, 500000.0]
+_data = [Vector2(0, 1), 0.0, 4.4544882e-05, 0, 0, Vector2(253521.16, 26.249388), 3.9512324e-06, 3.9512324e-06, 0, 0, Vector2(500000, 50), 0.00013754521, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_count = 16
+
+[sub_resource type="Resource" id="Resource_s3moa"]
+script = ExtResource("3_1hs26")
+sword_range = 100
+metadata/_custom_type_script = "uid://b16rqboonw4jx"
+
+[node name="BaseSword" unique_id=1540070817 instance=ExtResource("1_6d8qg")]
+script = ExtResource("2_2wphd")
+damage_curve = SubResource("Curve_1hs26")
+stats = SubResource("Resource_s3moa")

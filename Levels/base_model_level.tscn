@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bb6kat4hba0wy" path="res://Levels/Containers/misc.tscn" id="4_meivm"]
 [ext_resource type="PackedScene" uid="uid://bi2a3ia6mafqn" path="res://Entities/PlayerCharacter/player_spawn_location.tscn" id="5_8sc0v"]
 [ext_resource type="PackedScene" uid="uid://bh4hakq7d0ly7" path="res://Misc/enemy_spawner.tscn" id="6_r8iht"]
+[ext_resource type="PackedScene" uid="uid://csiwfjgb5givc" path="res://Entities/Interactibles/Enemies/BasicEnemy/BasicEnemy.tscn" id="7_wvrd1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6koui"]
 texture = ExtResource("1_wvrd1")
@@ -159,3 +160,15 @@ tile_set = SubResource("TileSet_3mrnv")
 zoom = Vector2(1.5, 1.5)
 
 [node name="EnemySpawner" parent="Misc" unique_id=544943082 instance=ExtResource("6_r8iht")]
+
+[node name="CharacterBody2D" parent="Misc" unique_id=1102968816 instance=ExtResource("7_wvrd1")]
+position = Vector2(-444, 15)
+stats = null
+
+[node name="CharacterBody2D2" parent="Misc" unique_id=1151280964 instance=ExtResource("7_wvrd1")]
+position = Vector2(-382, -150)
+stats = null
+
+[node name="CharacterBody2D3" parent="Misc" unique_id=195237884 instance=ExtResource("7_wvrd1")]
+position = Vector2(-282, 47)
+stats = null

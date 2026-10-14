@@ -17,3 +17,7 @@ func update(_delta: float)-> void:
 
 func update_physics(_delta: float)-> void:
 	pass
+
+
+func custom_state_input(event: InputEvent) -> void:
+	pass

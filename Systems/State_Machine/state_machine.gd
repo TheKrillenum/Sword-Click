@@ -3,6 +3,7 @@ class_name stateMachine extends Node
 var current_state: State
 @export var starting_state: State
 
+
 func _ready() -> void:
 	if(starting_state == null):
 		pass
@@ -34,3 +35,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if(current_state):
 		current_state.update_physics(delta)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if(current_state):
+		current_state.custom_state_input(event)

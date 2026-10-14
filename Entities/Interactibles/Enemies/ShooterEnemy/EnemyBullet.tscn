@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhkql0u1yyvt5"]
 
-[ext_resource type="Script" uid="uid://bo4570x5kjh2e" path="res://Entities/Interactibles/ShooterEnemy/Enemy_bullet_ai.gd" id="1_hpqsj"]
+[ext_resource type="Script" uid="uid://bo4570x5kjh2e" path="res://Entities/Interactibles/Enemies/ShooterEnemy/Enemy_bullet_ai.gd" id="1_hpqsj"]
 [ext_resource type="Texture2D" uid="uid://h34toeytg2p0" path="res://Misc/Aseprite_sprite/Enemy_bullet.png" id="1_urpto"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hpqsj"]
