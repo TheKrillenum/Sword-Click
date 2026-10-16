@@ -6,9 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://125w4th2y8o4" path="res://Entities/Swords/DefaultSword/Default_Sword.tscn" id="3_52dax"]
 [ext_resource type="PackedScene" uid="uid://dt68vmjrqc7y4" path="res://Systems/State_Machine/StateMachine.tscn" id="4_u1221"]
 [ext_resource type="Script" uid="uid://dwlkieccdyc7m" path="res://Systems/State_Machine/States/idle_state.gd" id="5_phx8k"]
-[ext_resource type="PackedScene" uid="uid://dxlol6cpkvrl1" path="res://Entities/PlayerCharacter/sword_container.tscn" id="6_jglra"]
 [ext_resource type="Script" uid="uid://flp5xg3h3lkp" path="res://Systems/State_Machine/States/dash_state.gd" id="6_oaojh"]
 [ext_resource type="Script" uid="uid://ciwmvrn6a2x2h" path="res://Systems/State_Machine/States/dodge_state.gd" id="6_pfdeb"]
+[ext_resource type="PackedScene" uid="uid://ccie6wbm75mb5" path="res://Systems/Sword_System/SwordSystem.tscn" id="8_pfdeb"]
+[ext_resource type="PackedScene" uid="uid://ds2548qc1nt6q" path="res://Entities/Swords/Lance/Lance.tscn" id="10_nxt61"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8vqu3"]
 
@@ -264,10 +265,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1664150558 node_paths=PackedStringArray("TEMP_SWORD", "sprite")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1664150558 node_paths=PackedStringArray("sprite")]
 collision_mask = 0
 script = ExtResource("1_kqwq0")
-TEMP_SWORD = NodePath("SwordContainer/BaseSword")
 sprite = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1039982512]
@@ -299,6 +299,8 @@ script = ExtResource("6_pfdeb")
 idle = NodePath("../Idle")
 dash = NodePath("../Dash")
 
-[node name="SwordContainer" parent="." unique_id=1006663970 instance=ExtResource("6_jglra")]
+[node name="SwordSystem" parent="." unique_id=628699428 instance=ExtResource("8_pfdeb")]
 
-[node name="BaseSword" parent="SwordContainer" unique_id=1540070817 instance=ExtResource("3_52dax")]
+[node name="DefaultSword" parent="SwordSystem" unique_id=1540070817 instance=ExtResource("3_52dax")]
+
+[node name="Lance" parent="SwordSystem" unique_id=1727337114 instance=ExtResource("10_nxt61")]

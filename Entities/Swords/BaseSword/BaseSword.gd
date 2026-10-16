@@ -4,6 +4,7 @@ class_name Sword extends Node2D
 
 # Animation
 @export var attack_animation: AnimatedSprite2D
+@export var sprite_animation: AnimatedSprite2D
 
 # Sword Data
 @export var stats: Sword_stats
@@ -63,7 +64,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if(!attached_to_player):
+	if(!attached_to_player and !on_the_ground):
 		position = position.move_toward(throw_target_location, stats.throw_speed)
 		if(position.is_equal_approx(throw_target_location)):
 			set_physics_process(false)
@@ -71,25 +72,6 @@ func _physics_process(delta: float) -> void:
 			throw_collision.monitoring = false
 			sword_power()
 
-
-func perform_combo_attack(targeted_location: Vector2)->void:
-	
-	if(is_on_cooldown):
-		print_debug("on cooldown !")
-		return
-	
-	if(stats.combo_attack_call.get(combo_attack_counter) == null):
-		printerr("Combo counter out of range")
-		reset_combo()
-		return
-		
-	Callable(self, stats.combo_attack_call.get(combo_attack_counter)).call(targeted_location)
-	
-	start_cooldown(stats.cooldown_time[combo_attack_counter])
-	
-	combo_attack_counter += 1
-	if (combo_attack_counter > (stats.max_attack_combo - 1)):
-		reset_combo()
 
 # DASH --------------------------------------------------------------------------------------------
 
@@ -118,15 +100,35 @@ func sword_power() -> void:
 	pass
 
 
-func pick_up_weapon()->void:
+func pick_up_sword()->void:
 	pass
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if(body as Interactible):
+	if(body as BaseEnemy):
 		deal_damage(body, stats.throw_damage)
 
 # COMBO DAMAGE AND AREAS----------------------------------------------------------------------------
+
+func perform_combo_attack(targeted_location: Vector2)->void:
+	
+	if(is_on_cooldown):
+		print_debug("on cooldown !")
+		return
+	
+	if(stats.combo_attack_call.get(combo_attack_counter) == null):
+		printerr("Combo counter out of range")
+		reset_combo()
+		return
+		
+	Callable(self, stats.combo_attack_call.get(combo_attack_counter)).call(targeted_location)
+	
+	start_cooldown(stats.cooldown_time[combo_attack_counter])
+	
+	combo_attack_counter += 1
+	if (combo_attack_counter > (stats.max_attack_combo - 1)):
+		reset_combo()
+
 
 func deal_damage(target: BaseEnemy, damage_amount: float)->void:
 	target.stats.take_damage(damage_amount)
@@ -138,9 +140,9 @@ func deal_damage(target: BaseEnemy, damage_amount: float)->void:
 ## CIRCLE - a [float] representing it's radius[br]
 ## RECTANGLE - a [Vector2] representing the rectangles width and heights as half_extents[br]
 ## SLASH - no need for any shape properties
-func check_for_area(area_rotation: float, area_scale: Vector2, area_origin: Vector2, requested_shape: Shape, _shape_properties = 0) -> Array[Interactible]:
+func check_for_area(area_rotation: float, area_scale: Vector2, area_origin: Vector2, requested_shape: Shape, _shape_properties = 0) -> Array[BaseEnemy]:
 	
-	var output: Array[Interactible]
+	var output: Array[BaseEnemy]
 	var collision_shape
 	
 	match requested_shape:
@@ -177,7 +179,7 @@ func check_for_area(area_rotation: float, area_scale: Vector2, area_origin: Vect
 	query.transform = Transform2D(area_rotation, area_scale, 0.0, area_origin)
 	
 	for n in space_state.intersect_shape(query, 1000.0):
-		if(n["collider"] as Interactible):
+		if(n["collider"] as BaseEnemy):
 			output.append(n["collider"])
 	
 	PhysicsServer2D.free_rid(collision_shape)
@@ -216,3 +218,7 @@ func reset_animation() -> void:
 	attack_animation.visible = false
 	attack_animation.rotation = 0.0
 	attack_animation.position = Vector2.ZERO
+
+
+func sprite_visibility(new_visibility: bool)->void:
+	sprite_animation.visible = new_visibility

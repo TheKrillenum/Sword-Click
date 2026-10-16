@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b16q1k7seebrj" path="res://Entities/Swords/BaseSword/BaseSword.tscn" id="1_6d8qg"]
 [ext_resource type="Script" uid="uid://cbmp671n4ejor" path="res://Entities/Swords/Lance/Lance.gd" id="2_2wphd"]
 [ext_resource type="Script" uid="uid://b16rqboonw4jx" path="res://Misc/Ressource/SwordStats.gd" id="3_1hs26"]
+[ext_resource type="Texture2D" uid="uid://cok3kxsyle3tt" path="res://Entities/Swords/Placeholder_swords/Lance_temp.png" id="4_s3moa"]
 
 [sub_resource type="Curve" id="Curve_1hs26"]
 _limits = [1.0, 50.0, 0.0, 500000.0]
@@ -12,10 +13,43 @@ metadata/_snap_count = 16
 
 [sub_resource type="Resource" id="Resource_s3moa"]
 script = ExtResource("3_1hs26")
+display_name = "Lance"
 sword_range = 100
 metadata/_custom_type_script = "uid://b16rqboonw4jx"
 
-[node name="BaseSword" unique_id=1540070817 instance=ExtResource("1_6d8qg")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3moa"]
+atlas = ExtResource("4_s3moa")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3nql1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3moa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dgday"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Lance" unique_id=1540070817 node_paths=PackedStringArray("sprite_animation") instance=ExtResource("1_6d8qg")]
 script = ExtResource("2_2wphd")
 damage_curve = SubResource("Curve_1hs26")
+sprite_animation = NodePath("Animated_Sword_sprite")
 stats = SubResource("Resource_s3moa")
+
+[node name="Animated_Sword_sprite" parent="." index="0" unique_id=1266268922]
+sprite_frames = SubResource("SpriteFrames_3nql1")
+autoplay = "default"
+frame_progress = 0.82445127
+
+[node name="VFX_animation" parent="." index="1" unique_id=1904424445]
+sprite_frames = SubResource("SpriteFrames_dgday")

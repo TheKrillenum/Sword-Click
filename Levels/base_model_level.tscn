@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bb6kat4hba0wy" path="res://Levels/Containers/misc.tscn" id="4_meivm"]
 [ext_resource type="PackedScene" uid="uid://bi2a3ia6mafqn" path="res://Entities/PlayerCharacter/player_spawn_location.tscn" id="5_8sc0v"]
 [ext_resource type="PackedScene" uid="uid://bh4hakq7d0ly7" path="res://Misc/enemy_spawner.tscn" id="6_r8iht"]
-[ext_resource type="PackedScene" uid="uid://csiwfjgb5givc" path="res://Entities/Interactibles/Enemies/BasicEnemy/BasicEnemy.tscn" id="7_wvrd1"]
+[ext_resource type="PackedScene" uid="uid://csiwfjgb5givc" path="res://Entities/Enemies/BasicEnemy/BasicEnemy.tscn" id="7_wvrd1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6koui"]
 texture = ExtResource("1_wvrd1")

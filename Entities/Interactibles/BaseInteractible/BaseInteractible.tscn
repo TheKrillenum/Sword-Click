@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bm3ffagf8gyo5"]
 
-[ext_resource type="Texture2D" uid="uid://pl2l3y8ismg7" path="res://Entities/Interactibles/TempInteract.png" id="1_pec4u"]
+[ext_resource type="Texture2D" uid="uid://pl2l3y8ismg7" path="res://Entities/Enemies/TempEnemy.png" id="1_pec4u"]
 [ext_resource type="Script" uid="uid://bcegyjee7ljnc" path="res://Entities/Interactibles/BaseInteractible/BaseInteractible.gd" id="2_kqi3l"]
 [ext_resource type="Texture2D" uid="uid://d17jriq0y80b8" path="res://Entities/Interactibles/WhiteSquare.png" id="3_4vhms"]
 
@@ -118,11 +118,10 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1102968816 node_paths=PackedStringArray("highlight", "animation_sprite")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1102968816 node_paths=PackedStringArray("highlight")]
 collision_layer = 2
 script = ExtResource("2_kqi3l")
 highlight = NodePath("Sprite2D")
-animation_sprite = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1489134478]
 position = Vector2(0, 5)

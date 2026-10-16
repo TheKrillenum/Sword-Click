@@ -1,6 +1,5 @@
 class_name BasicEnemy extends BaseEnemy
 
-
 func enemy_ai()->void:
 	if(hit_stun()):
 		return

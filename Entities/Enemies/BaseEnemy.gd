@@ -1,13 +1,15 @@
-class_name BaseEnemy extends Interactible
+class_name BaseEnemy extends CharacterBody2D
+
+@export var stats: EnemyStats
+@export var animation_sprite: AnimatedSprite2D
 
 var is_in_hitstun: bool = false
 var current_hitstun_frame: int = 0
-@export var stats: EnemyStats
 var circle_counter_clockwise: bool = true
 
 func _ready() -> void:
-	super()
-	EnemyManager.all_interactibles.append(self)
+	#super()
+	InteractibleManager.all_enemies.append(self)
 	stats.parent_enemy = self
 	circling_direction()
 
@@ -35,7 +37,7 @@ func move_toward_distance_from_player(distance_from_player: float) -> void:
 
 
 func move_away_from_other_enemies() -> void:
-	for enemy in EnemyManager.all_interactibles:
+	for enemy in InteractibleManager.all_enemies:
 		if(enemy != self):
 			if(position.distance_squared_to(enemy.position) < 400):
 				velocity += (position - enemy.position).normalized() * stats.speed
@@ -80,5 +82,5 @@ func damaged()->void:
 
 
 func destroy()->void:
-	EnemyManager.all_interactibles.erase(self)
-	super()
+	InteractibleManager.all_enemies.erase(self)
+	self.queue_free()

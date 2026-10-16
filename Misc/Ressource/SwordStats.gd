@@ -1,6 +1,7 @@
 class_name Sword_stats extends Resource
 
 # Sword data
+@export var display_name: String = "Unnamed"
 @export var sword_range: int = 0
 @export var combo_damage: Array[float] = [10.0]
 @export var dash_damage: float = 5.0

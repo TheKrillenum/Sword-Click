@@ -22,14 +22,14 @@ func _ready() -> void:
 
 func spawn_enemies()->void:
 	for n in amount_to_spawn:
-		var new_enemy: Interactible = create_basic_enemy()
+		var new_enemy: BaseEnemy = create_basic_enemy()
 		var spawn_position: Vector2 = get_spawn_position()
 		new_enemy.global_position = spawn_position
 
 
-func create_basic_enemy() -> Interactible:
+func create_basic_enemy() -> BaseEnemy:
 	if(basic_enemy.can_instantiate()):
-		var new_enemy: Interactible = basic_enemy.instantiate()
+		var new_enemy: BaseEnemy = basic_enemy.instantiate()
 		
 		if(new_enemy != null):
 			get_tree().get_first_node_in_group("Enemy_container").add_child(new_enemy)
@@ -39,9 +39,9 @@ func create_basic_enemy() -> Interactible:
 		return null
 
 
-func create_shooter_enemy() -> Interactible:
+func create_shooter_enemy() -> BaseEnemy:
 	if(shooting_enemy.can_instantiate()):
-		var new_enemy: Interactible = shooting_enemy.instantiate()
+		var new_enemy: BaseEnemy = shooting_enemy.instantiate()
 		
 		if(new_enemy != null):
 			get_tree().get_first_node_in_group("Enemy_container").add_child(new_enemy)
@@ -63,12 +63,12 @@ func get_spawn_position() -> Vector2:
 
 
 func set_spawn_properties() -> void:
-	if(EnemyManager.all_interactibles.size() < 10):
-		amount_to_spawn = 3
-	elif(EnemyManager.all_interactibles.size() > 50):
-		amount_to_spawn = 1
-	else:
+	if(InteractibleManager.all_enemies.size() < 10):
 		amount_to_spawn = 2
+	elif(InteractibleManager.all_enemies.size() > 50):
+		amount_to_spawn = 0
+	else:
+		amount_to_spawn = 1
 	#Which enemy
 
 
@@ -83,6 +83,6 @@ func _on_timeout() -> void:
 
 
 func safsgdgn() -> void:
-		var new_enemy: Interactible = create_shooter_enemy()
+		var new_enemy: BaseEnemy = create_shooter_enemy()
 		var spawn_position: Vector2 = get_spawn_position()
 		new_enemy.global_position = spawn_position

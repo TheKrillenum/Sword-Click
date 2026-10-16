@@ -14,7 +14,7 @@ func enter_state()-> void:
 		if(player.current_target == null and next_target_buffer != null):
 			player.current_target = next_target_buffer
 				
-		player.TEMP_SWORD.dash_attack_begin(player.current_target.position)
+		player.active_sword.dash_attack_begin(player.current_target.position)
 	
 	if(player.sprite):
 		player.sprite.play("Run")
@@ -76,12 +76,12 @@ func dash_logic()-> void:
 	
 	player.velocity = player.position.direction_to(player.current_target.position) * player.SPEED
 	
-	if(player.position.distance_to(player.current_target.position) < (player.TEMP_SWORD.stats.sword_range * 0.75)):
-		player.TEMP_SWORD.dash_attack_complete(player.current_target.position)
+	if(player.position.distance_to(player.current_target.position) < (player.active_sword.stats.sword_range * 0.75)):
+		player.active_sword.dash_attack_complete(player.current_target.position)
 		if(active_buffer and is_instance_valid(next_target_buffer)):
 			player.current_target = next_target_buffer
 			active_buffer = false
-			player.TEMP_SWORD.dash_attack_begin(player.current_target.position)
+			player.active_sword.dash_attack_begin(player.current_target.position)
 		else:
 			switch_state.emit(idle)
 
@@ -89,7 +89,7 @@ func dash_logic()-> void:
 func TEMP_FORGIVING_DASH() -> void:
 	var selected_enemy: Interactible = PointAndClick.last_highlighted_enemy
 	
-	if(player.position.distance_to(selected_enemy.position) <= player.TEMP_SWORD.stats.sword_range):
-		player.TEMP_SWORD.perform_combo_attack(selected_enemy.position)
+	if(player.position.distance_to(selected_enemy.position) <= player.active_sword.stats.sword_range):
+		player.active_sword.perform_combo_attack(selected_enemy.position)
 	else:
 		player.current_target = selected_enemy

@@ -19,7 +19,7 @@ func custom_state_input(event: InputEvent) -> void:
 			debug_mode_idle()
 			return
 		
-		if(PointAndClick.last_highlighted_enemy == null):
+		if(PointAndClick.last_highlighted_interactible == null):
 			return
 		
 		enemy_selection()
@@ -34,10 +34,10 @@ func debug_mode_idle() -> void:
 
 
 func enemy_selection() -> void:
-	var selected_enemy: Interactible = PointAndClick.last_highlighted_enemy
+	var selected_enemy: Interactible = PointAndClick.last_highlighted_interactible
 	
-	if(player.position.distance_to(selected_enemy.position) <= player.TEMP_SWORD.stats.sword_range):
-		player.TEMP_SWORD.perform_combo_attack(selected_enemy.position)
+	if(player.position.distance_to(selected_enemy.position) <= player.active_sword.stats.sword_range):
+		player.active_sword.perform_combo_attack(selected_enemy.position)
 	else:
 		player.current_target = selected_enemy
 		switch_state.emit(dash)

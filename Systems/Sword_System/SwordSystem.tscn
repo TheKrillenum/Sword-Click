@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ccie6wbm75mb5"]
+
+[ext_resource type="Script" uid="uid://cqo5087um8w80" path="res://Systems/Sword_System/SwordSystem.gd" id="1_o6eq0"]
+
+[node name="SwordSystem" type="Node2D" unique_id=628699428 groups=["Sword_container"]]
+script = ExtResource("1_o6eq0")

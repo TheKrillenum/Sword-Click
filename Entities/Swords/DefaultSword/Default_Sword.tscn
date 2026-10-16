@@ -4,18 +4,35 @@
 [ext_resource type="Script" uid="uid://j8po4cjg0757" path="res://Entities/Swords/DefaultSword/DefaultSword.gd" id="2_wl4wu"]
 [ext_resource type="Script" uid="uid://b16rqboonw4jx" path="res://Misc/Ressource/SwordStats.gd" id="3_dgg6o"]
 [ext_resource type="Texture2D" uid="uid://bclsciq2dtcdk" path="res://Misc/Aseprite_sprite/Sprite-0001.png" id="4_0w41c"]
+[ext_resource type="Texture2D" uid="uid://dr6b3mjk4k2fp" path="res://Entities/Swords/Placeholder_swords/Default_sword_temp.png" id="4_1wkqc"]
 [ext_resource type="Texture2D" uid="uid://bkd23oxscfvd1" path="res://Misc/Aseprite_sprite/Sprite-0002.png" id="4_8c634"]
 [ext_resource type="Texture2D" uid="uid://di8gohd7lgocf" path="res://Misc/Aseprite_sprite/Slam_anim-sheet.png" id="4_dgg6o"]
 [ext_resource type="Texture2D" uid="uid://bv48jyaxou6st" path="res://Misc/Aseprite_sprite/Dash_attack_anim-sheet.png" id="6_1wkqc"]
 
 [sub_resource type="Resource" id="Resource_1wkqc"]
 script = ExtResource("3_dgg6o")
+display_name = "Iron Sword"
 sword_range = 75
 combo_damage = Array[float]([10.0, 20.0, 30.0])
 cooldown_time = Array[float]([0.2, 0.2, 0.6])
 max_attack_combo = 3
 combo_attack_call = Array[String](["combo_attack_1", "combo_attack_2", "combo_attack_3"])
 metadata/_custom_type_script = "uid://b16rqboonw4jx"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0377"]
+atlas = ExtResource("4_1wkqc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_60jpi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0377")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1wkqc"]
 atlas = ExtResource("4_8c634")
@@ -257,12 +274,14 @@ animations = [{
 "speed": 64.0
 }]
 
-[node name="BaseSword" unique_id=1540070817 instance=ExtResource("1_10hg1")]
+[node name="DefaultSword" unique_id=1540070817 node_paths=PackedStringArray("sprite_animation") instance=ExtResource("1_10hg1")]
 script = ExtResource("2_wl4wu")
+sprite_animation = NodePath("Animated_Sword_sprite")
 stats = SubResource("Resource_1wkqc")
 
-[node name="AnimatedSprite2D" parent="." index="2" unique_id=1904424445]
+[node name="Animated_Sword_sprite" parent="." index="0" unique_id=1266268922]
+sprite_frames = SubResource("SpriteFrames_60jpi")
+
+[node name="VFX_animation" parent="." index="1" unique_id=1904424445]
 sprite_frames = SubResource("SpriteFrames_1wkqc")
-animation = &"combo2_anim"
-frame = 7
-frame_progress = 1.0
+animation = &"combo1_anim"

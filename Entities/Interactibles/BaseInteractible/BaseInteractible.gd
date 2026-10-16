@@ -1,7 +1,6 @@
-class_name Interactible extends CharacterBody2D
+class_name Interactible extends Node2D
 
 @export var highlight: Sprite2D
-@export var animation_sprite: AnimatedSprite2D
 
 func _init() -> void:
 	set_process(false)
@@ -17,8 +16,5 @@ func update_highlight_visibility(new_visibility: bool):
 
 
 func destroy()->void:
+	InteractibleManager.all_interactible.erase(self)
 	self.queue_free()
-
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-	animation_sprite.play("Idle")

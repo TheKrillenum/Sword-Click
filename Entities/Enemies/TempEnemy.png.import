@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pl2l3y8ismg7"
-path="res://.godot/imported/TempInteract.png-2a70a1e76695505fde2f1abb252ff6d8.ctex"
+path="res://.godot/imported/TempEnemy.png-c480bc27fef31ffdf2b3a72cd2fd12da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Entities/Interactibles/TempInteract.png"
-dest_files=["res://.godot/imported/TempInteract.png-2a70a1e76695505fde2f1abb252ff6d8.ctex"]
+source_file="res://Entities/Enemies/TempEnemy.png"
+dest_files=["res://.godot/imported/TempEnemy.png-c480bc27fef31ffdf2b3a72cd2fd12da.ctex"]
 
 [params]
 
