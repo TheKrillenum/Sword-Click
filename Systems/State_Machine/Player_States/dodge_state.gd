@@ -4,6 +4,8 @@ extends "res://Systems/State_Machine/base_state.gd"
 @export var idle: State
 @export var dash: State
 
+var player: Player = Player.get_player()
+
 # Dodge properties
 var dodge_start_position: Vector2
 var current_distance_traveled: float = 0.0
@@ -20,8 +22,8 @@ const MAX_DODGE_LENGHT: float = 50
 
 
 func enter_state()-> void:
-	dodge_start_position = Player.get_player().global_position
-	dodge_direction = (PointAndClick.current_mouse_pos - Player.get_player().position).normalized()
+	dodge_start_position = player.global_position
+	dodge_direction = (PointAndClick.current_mouse_pos - player.position).normalized()
 	current_distance_traveled = 0
 	dodge_speed = DODGE_MAX_SPEED
 	is_dodge_over = false
@@ -58,21 +60,21 @@ func update_physics(_delta: float)-> void:
 		if(player_IFrame and current_distance_traveled >= MAX_DODGE_LENGHT):
 			player_end_iFrame()
 		else:
-			current_distance_traveled = Vector2(dodge_start_position - Player.get_player().global_position).length()
+			current_distance_traveled = Vector2(dodge_start_position - player.global_position).length()
 			
 	dodge_movement()
 
 
 func player_start_iFrame()->void:
 	player_IFrame = true
-	Player.get_player().invincible = true
+	player.invincible = true
 	if(player.sprite):
 		player.sprite.play("IFrame")
 
 
 func player_end_iFrame()->void:
 	player_IFrame = false
-	Player.get_player().invincible = false
+	player.invincible = false
 	if(player.sprite):
 		player.sprite.play("Dodge")
 
@@ -92,4 +94,4 @@ func on_ease_out_end()->void:
 
 
 func dodge_movement()->void:
-	Player.get_player().velocity = dodge_direction * dodge_speed
+	player.velocity = dodge_direction * dodge_speed

@@ -2,6 +2,7 @@ class_name idleState extends State
 
 @export var dash: State
 @export var dodge: State
+var player: Player = Player.get_player()
 
 func enter_state()-> void:
 	if(player.sprite):

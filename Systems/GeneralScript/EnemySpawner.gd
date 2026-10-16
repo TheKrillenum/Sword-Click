@@ -1,7 +1,7 @@
 extends Timer
 
-var basic_enemy: Resource = preload("uid://csiwfjgb5givc")
-var shooting_enemy: Resource = preload("uid://2c78omsjmcdb")
+var basic_enemy: Resource = preload("res://Entities/Enemies/BaseEnemy/base_enemy.tscn")
+var shooting_enemy: Resource = preload("res://Entities/Enemies/BaseEnemy/base_enemy.tscn")
 var xd: bool = false
 
 # spawn properties

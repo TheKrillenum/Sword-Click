@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://db0d6x5e4etjv"]
+
+[ext_resource type="Script" uid="uid://bcegyjee7ljnc" path="res://Entities/Interactibles/BaseInteractible/BaseInteractible.gd" id="1_wb61n"]
+[ext_resource type="Texture2D" uid="uid://cwm6w0k82hoql" path="res://Entities/Interactibles/BaseInteractible/Unselected_Temp.png" id="2_i5fpj"]
+[ext_resource type="Texture2D" uid="uid://cursrqwu15dm3" path="res://Entities/Interactibles/BaseInteractible/Selected_Temp.png" id="2_q5bjt"]
+
+[node name="Interactible" type="Node2D" unique_id=1639945495 node_paths=PackedStringArray("highlight")]
+script = ExtResource("1_wb61n")
+highlight = NodePath("Sprite2D")
+selected_texture = ExtResource("2_q5bjt")
+unselected_texture = ExtResource("2_i5fpj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1380208023]
+texture = ExtResource("2_i5fpj")

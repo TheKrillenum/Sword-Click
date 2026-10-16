@@ -61,7 +61,9 @@ func dash_attack_complete(_targeted_location: Vector2)->void:
 	attack_animation.play("dash_anim")
 	
 	for enemy in check_for_area(attack_rotation, attack_scale, attack_origin, Shape.SEGMENT,100.0):
-			deal_damage(enemy, stats.dash_damage)
+		print_debug(enemy)
+		deal_damage(enemy, stats.dash_damage)
+	print_debug("End of attack")
 	super(_targeted_location)
 
 # --------------------------------------------------------------------------------------------------

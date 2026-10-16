@@ -1,7 +1,6 @@
 class_name State extends Node
 
 signal switch_state(new_state: State)
-var player = Player.get_player()
 
 func enter_state()-> void:
 	pass

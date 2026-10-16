@@ -3,10 +3,9 @@ class_name stateMachine extends Node
 var current_state: State
 @export var starting_state: State
 
-
 func _ready() -> void:
 	if(starting_state == null):
-		pass
+		push_error("Missing starting state and/or the state owner")
 	else:
 		for child_state in get_children():
 			if(child_state as State):
