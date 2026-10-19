@@ -22,7 +22,7 @@ func move_toward_distance_from_player(distance_from_player: float) -> void:
 		if(state_owner.position.y >= (GlobalDataCollection.screen_size.y - 10) || state_owner.position.y <= 10):
 			return
 		# Move away from player
-		state_owner.velocity += (state_owner.position - Player.get_player().state_owner.position).normalized() * state_owner.stats.speed
+		state_owner.velocity += (state_owner.position - Player.get_player().position).normalized() * state_owner.stats.speed
 
 
 func move_away_from_other_enemies() -> void:

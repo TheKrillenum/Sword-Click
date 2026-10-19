@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://djle3btucl4f8"]
+
+[ext_resource type="PackedScene" uid="uid://cmui56ejeqf7u" path="res://Entities/Enemies/BaseEnemy/base_enemy.tscn" id="1_seg8j"]
+[ext_resource type="Script" uid="uid://cbflqdn4q6dsf" path="res://Systems/State_Machine/Enemy_State/Simple_enemy_state/move_to_player_state.gd" id="2_ms1tm"]
+
+[node name="SimpleEnemy" unique_id=348832658 instance=ExtResource("1_seg8j")]
+
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=524395475]
+animation = &"Run"
+autoplay = "Run"
+
+[node name="StateMachine" parent="." index="3" unique_id=313265871 node_paths=PackedStringArray("starting_state")]
+starting_state = NodePath("MoveToPlayer_State")
+
+[node name="hitReaction_state" parent="StateMachine" index="1" unique_id=1730515674 node_paths=PackedStringArray("next_state")]
+next_state = NodePath("../MoveToPlayer_State")
+
+[node name="MoveToPlayer_State" type="Node" parent="StateMachine" index="2" unique_id=1557788964 node_paths=PackedStringArray("state_owner")]
+script = ExtResource("2_ms1tm")
+state_owner = NodePath("../..")

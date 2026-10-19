@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dhtqsyic55020"]
+
+[ext_resource type="PackedScene" uid="uid://cmui56ejeqf7u" path="res://Entities/Enemies/BaseEnemy/base_enemy.tscn" id="1_s448o"]
+[ext_resource type="Script" uid="uid://dfb8a0m7y4rhj" path="res://Misc/Ressource/EnemyStats.gd" id="2_057nr"]
+[ext_resource type="Script" uid="uid://cxwjrgiegnkpn" path="res://Systems/State_Machine/Enemy_State/Shooter_enemy_state/Circle_around_player_state.gd" id="2_172ja"]
+[ext_resource type="Script" uid="uid://18xiqhprbbew" path="res://Systems/State_Machine/Enemy_State/Shooter_enemy_state/Shoot_player_state.gd" id="3_057nr"]
+
+[sub_resource type="Resource" id="Resource_qqaty"]
+script = ExtResource("2_057nr")
+speed = 50.0
+metadata/_custom_type_script = "uid://dfb8a0m7y4rhj"
+
+[node name="ShooterEnemy" unique_id=348832658 instance=ExtResource("1_s448o")]
+stats = SubResource("Resource_qqaty")
+
+[node name="StateMachine" parent="." index="3" unique_id=313265871 node_paths=PackedStringArray("starting_state")]
+starting_state = NodePath("CircleAroundPlayer_state")
+
+[node name="hitReaction_state" parent="StateMachine" index="1" unique_id=1730515674 node_paths=PackedStringArray("next_state")]
+next_state = NodePath("../CircleAroundPlayer_state")
+
+[node name="CircleAroundPlayer_state" type="Node" parent="StateMachine" index="2" unique_id=85187125 node_paths=PackedStringArray("shoot_player", "state_owner")]
+script = ExtResource("2_172ja")
+shoot_player = NodePath("../ShootPlayer_state")
+shooting_distance = 50000.0
+frame_until_next_shot = 100
+state_owner = NodePath("../..")
+
+[node name="ShootPlayer_state" type="Node" parent="StateMachine" index="3" unique_id=819145300 node_paths=PackedStringArray("next_state", "state_owner")]
+script = ExtResource("3_057nr")
+next_state = NodePath("../CircleAroundPlayer_state")
+state_owner = NodePath("../..")

@@ -1,8 +1,8 @@
 extends Timer
 
-var basic_enemy: Resource = preload("res://Entities/Enemies/BaseEnemy/base_enemy.tscn")
-var shooting_enemy: Resource = preload("res://Entities/Enemies/BaseEnemy/base_enemy.tscn")
-var xd: bool = false
+var simple_enemy: Resource = preload("res://Entities/Enemies/SimpleEnemy/simple_enemy.tscn")
+var shooting_enemy: Resource = preload("res://Entities/Enemies/ShooterEnemy/shooter_enemy.tscn")
+var xd: bool = true
 
 # spawn properties
 var amount_to_spawn: int = 1
@@ -12,6 +12,12 @@ var amount_to_spawn: int = 1
 var query = PhysicsShapeQueryParameters2D.new()
 var space_state: PhysicsDirectSpaceState2D
 
+# FUNCTION -----------------------------------------------------------------------------------------
+func _init() -> void:
+	set_process(false)
+	set_physics_process(false)
+
+
 func _ready() -> void:
 	space_state = get_viewport().find_world_2d().direct_space_state
 	var area_check_shape = PhysicsServer2D.circle_shape_create()
@@ -19,17 +25,11 @@ func _ready() -> void:
 	query.shape_rid = area_check_shape
 	query.transform = Transform2D(Vector2.RIGHT, Vector2.DOWN, Vector2.ZERO)
 
+# Create all kinds of enemies ----------------------------------------------------------------------
 
-func spawn_enemies()->void:
-	for n in amount_to_spawn:
-		var new_enemy: BaseEnemy = create_basic_enemy()
-		var spawn_position: Vector2 = get_spawn_position()
-		new_enemy.global_position = spawn_position
-
-
-func create_basic_enemy() -> BaseEnemy:
-	if(basic_enemy.can_instantiate()):
-		var new_enemy: BaseEnemy = basic_enemy.instantiate()
+func create_simple_enemy() -> BaseEnemy:
+	if(simple_enemy.can_instantiate()):
+		var new_enemy: BaseEnemy = simple_enemy.instantiate()
 		
 		if(new_enemy != null):
 			get_tree().get_first_node_in_group("Enemy_container").add_child(new_enemy)
@@ -50,6 +50,14 @@ func create_shooter_enemy() -> BaseEnemy:
 		push_error("Canno't instantiate a new enemy")
 		return null
 
+# Spawn enemies ------------------------------------------------------------------------------------
+
+func spawn_enemies()->void:
+	for n in amount_to_spawn:
+		var new_enemy: BaseEnemy = create_simple_enemy()
+		var spawn_position: Vector2 = get_spawn_position()
+		new_enemy.global_position = spawn_position
+
 
 func get_spawn_position() -> Vector2:
 	var output_position: Vector2
@@ -65,7 +73,7 @@ func get_spawn_position() -> Vector2:
 func set_spawn_properties() -> void:
 	if(InteractibleManager.all_enemies.size() < 10):
 		amount_to_spawn = 2
-	elif(InteractibleManager.all_enemies.size() > 50):
+	elif(InteractibleManager.all_enemies.size() > 30):
 		amount_to_spawn = 0
 	else:
 		amount_to_spawn = 1
@@ -73,13 +81,14 @@ func set_spawn_properties() -> void:
 
 
 func _on_timeout() -> void:
-	set_spawn_properties()
-	spawn_enemies()
+	#set_spawn_properties()
+	#spawn_enemies()
 	if(xd):
 		safsgdgn()
 		xd = false
 	else:
-		xd = true
+		pass
+		#xd = true
 
 
 func safsgdgn() -> void:

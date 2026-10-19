@@ -2,6 +2,11 @@ class_name State extends Node
 
 signal switch_state(new_state: State)
 
+func _init() -> void:
+	set_process(false)
+	set_physics_process(false)
+
+
 func enter_state()-> void:
 	pass
 

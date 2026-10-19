@@ -4,3 +4,5 @@
 
 [node name="StateMachine" type="Node" unique_id=313265871]
 script = ExtResource("1_sub82")
+
+[node name="HitReaction_State" type="Node" parent="." unique_id=1158341941]

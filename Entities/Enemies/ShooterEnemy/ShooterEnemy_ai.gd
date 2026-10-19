@@ -1,6 +1,6 @@
 class_name ShooterEnemy extends BaseEnemy
 
-var bullet_scene: Resource = preload("uid://bhkql0u1yyvt5")
+
 var shooting_distance: float = 60000.0
 var shooting_cooldown_time: float = 4.0
 @export var cooldown_timer: Timer
@@ -13,18 +13,13 @@ func _ready() -> void:
 
 
 func enemy_ai() -> void:
-	
-	if(hit_stun()):
-		return
-	
-	move_toward_distance_from_player(shooting_distance)
-	move_away_from_other_enemies()
-	circle_around_position(Player.get_player().position)
-	move_and_slide()
-	reset_velocity()
-	
-	if(can_shoot && (position.distance_squared_to(Player.get_player().position) < shooting_distance*1.5)):
-		shoot_player()
+	pass
+	#if(hit_stun()):
+		#return
+	#
+	#
+	#if(can_shoot && (position.distance_squared_to(Player.get_player().position) < shooting_distance*1.5)):
+		#shoot_player()
 
 
 func shoot_player() -> void:

@@ -131,7 +131,7 @@ func perform_combo_attack(targeted_location: Vector2)->void:
 
 
 func deal_damage(target: BaseEnemy, damage_amount: float)->void:
-	target.stats.take_damage(damage_amount)
+	target.damage_enemy(damage_amount)
 
 
 ## [enum Shape] represent the 4 possible shapes: SEGMENT, CIRCLE, RECTANGLE and SLASH.[br]

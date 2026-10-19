@@ -4,40 +4,27 @@ class_name BaseEnemy extends CharacterBody2D
 
 @export var stats: EnemyStats
 @export var animation_sprite: AnimatedSprite2D
-
-var is_in_hitstun: bool = false
-var current_hitstun_frame: int = 0
+@export var state_machine: stateMachine
+@export var hitReaction_state: State
 
 # FUNCTION -----------------------------------------------------------------------------------------
 
+func _init() -> void:
+	set_process(false)
+	set_physics_process(false)
+
 func _ready() -> void:
-	#super()
 	InteractibleManager.all_enemies.append(self)
-	stats.parent_enemy = self
-
-
-func enemy_ai()->void:
-	pass
 
 # Healh & Damage -----------------------------------------------------------------------------------
 
-#func hit_stun() -> bool:
-	#if(!is_in_hitstun):
-		#return false
-	#reset_velocity()
-	#current_hitstun_frame += 1
-	#
-	#if(current_hitstun_frame > stats.hitstun_frame_duration):
-		#is_in_hitstun = false
-		#current_hitstun_frame = 0
-		#return false
-	#else:
-		#return true
-
-
-func damaged()->void:
-	animation_sprite.play("Hit")
-	is_in_hitstun = true
+func damage_enemy(damage_amount: float)->void:
+	stats.health -= damage_amount
+	
+	if(stats.health <= 0):
+		destroy()
+	else:
+		state_machine.update_state(hitReaction_state)
 
 
 func destroy()->void:
@@ -49,4 +36,4 @@ func destroy()->void:
 # Animation ----------------------------------------------------------------------------------------
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	animation_sprite.play("Idle")
+	pass#animation_sprite.play("Idle")

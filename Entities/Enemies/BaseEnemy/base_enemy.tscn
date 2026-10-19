@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dfb8a0m7y4rhj" path="res://Misc/Ressource/EnemyStats.gd" id="2_40idk"]
 [ext_resource type="Texture2D" uid="uid://pl2l3y8ismg7" path="res://Entities/Enemies/TempEnemy.png" id="2_7725u"]
 [ext_resource type="PackedScene" uid="uid://dt68vmjrqc7y4" path="res://Systems/State_Machine/StateMachine.tscn" id="5_o508v"]
+[ext_resource type="Script" uid="uid://8mjlskyw3n75" path="res://Systems/State_Machine/Enemy_State/HitReaction_state.gd" id="6_heaec"]
 
 [sub_resource type="Resource" id="Resource_o508v"]
 script = ExtResource("2_40idk")
@@ -123,28 +124,34 @@ animations = [{
 "texture": SubResource("AtlasTexture_fikbu")
 }],
 "loop": true,
-"name": &"Idle",
+"name": &"Run",
 "speed": 12.0
 }]
 
-[node name="BaseEnemy" type="CharacterBody2D" unique_id=348832658 node_paths=PackedStringArray("animation_sprite")]
+[node name="BaseEnemy" type="CharacterBody2D" unique_id=348832658 node_paths=PackedStringArray("animation_sprite", "state_machine", "hitReaction_state")]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_228lo")
 stats = SubResource("Resource_o508v")
 animation_sprite = NodePath("AnimatedSprite2D")
-
-[node name="Interactible" parent="." unique_id=1639945495 instance=ExtResource("1_n80j4")]
+state_machine = NodePath("StateMachine")
+hitReaction_state = NodePath("StateMachine/hitReaction_state")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622921006]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_7725u")
 
+[node name="Interactible" parent="." unique_id=1639945495 instance=ExtResource("1_n80j4")]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=524395475]
 sprite_frames = SubResource("SpriteFrames_2mmf4")
-animation = &"Idle"
-autoplay = "Idle"
+animation = &"Run"
+autoplay = "Run"
 
 [node name="StateMachine" parent="." unique_id=313265871 instance=ExtResource("5_o508v")]
+
+[node name="hitReaction_state" type="Node" parent="StateMachine" unique_id=1730515674 node_paths=PackedStringArray("state_owner")]
+script = ExtResource("6_heaec")
+state_owner = NodePath("../..")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
